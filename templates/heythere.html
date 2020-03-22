@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    Hey there!
+{% endblock %}
+
+{% block body %}
+
+  <p>{{ message }}</p>
+
+  <a href="{{ url_for('index') }}">Go home</a>
+
+{% endblock %}

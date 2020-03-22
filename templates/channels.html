@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    Channels
+{% endblock %}
+
+{% block body %}
+
+      <h5>Welcome {{username}}! Here are the channels you can join:</h5>
+
+      <ul>
+        {% for channel in channels %}
+          <a href="{{ url_for('channel_details', channel_name=channel) }}"><li>{{ channel }}</li></a>
+        {% else %}
+          <li>no channels</li>
+        {% endfor %}
+      </ul>
+
+      <h5>You can also create your own channel</h5>
+
+      <form action="{{ url_for('channels') }}" method="post">
+          <input type="text" name="channel_name" placeholder="Enter Channel Name">
+          <button>Add Channel</button>
+      </form>
+
+      <a href="{{ url_for('index') }}">Go home</a>
+
+{% endblock %}

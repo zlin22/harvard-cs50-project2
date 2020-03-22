@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block scripts %}
+        <script>
+          var counter = 3
+          var redirectURL = ''
+
+          document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('recentChannel') && localStorage.getItem('username') === '{{username}}') {
+              recentChannel = localStorage.getItem('recentChannel')
+              redirectURL = '/channel_details/'.concat(recentChannel)
+
+              var x = setInterval(() => {
+                  if (counter < 0) {
+                    clearInterval(x)
+                    window.location.href = `${redirectURL}`
+                  } else {
+                    document.querySelector('#redirect_msg').innerHTML = `You most recent channel was <b>${recentChannel}</b>. <br> Redirecting you there in ${counter}`
+                    counter--
+                  }
+              }, 1000);
+            }
+          });
+
+        </script>
+
+{% endblock %}
+
+{% block heading %}
+    Project 2: Flack
+{% endblock %}
+
+{% block body %}
+
+    {% if username == None %}
+
+      <form action="{{ url_for('login') }}" method="post">
+          <input type="text" name="username" placeholder="Enter Username">
+          <button>Register</button>
+      </form>
+
+    {% else %}
+
+      <p>Welcome {{username}}! You are logged in.</p>
+      <div id="redirect_msg"></div>
+
+      <a href="{{ url_for('channels') }}">See all channels</a>
+
+    <p>
+      <form action="{{ url_for('logout') }}" method="post">
+          <button>Log out</button>
+      </form>
+    </p>
+
+    {% endif %}
+
+{% endblock %}
